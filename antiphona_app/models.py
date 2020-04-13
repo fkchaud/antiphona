@@ -46,7 +46,7 @@ class MissaType_AntiphonaType(models.Model):
 class Missa(models.Model):
     """This is the celebration itself."""
     name = models.CharField(max_length=40)
-    missae_type = models.ForeignKey(
+    missa_type = models.ForeignKey(
         MissaType,
         on_delete=models.SET_DEFAULT,
         default=MissaType.get_default_missa_type,

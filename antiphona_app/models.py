@@ -39,7 +39,7 @@ class MissaType(models.Model):
     @classmethod
     def get_default_missa_type(cls):
         """Returns the default missa type in case anyone deleted a reference."""
-        return cls.objects.get_or_create(name="Dominica")
+        return cls.objects.get_or_create(name="Dominica")[0]
 
     def __str__(self):
         return self.name

@@ -1,3 +1,5 @@
+"""All the models are here."""
+
 from django.db import models
 
 
@@ -28,9 +30,10 @@ class MissaType(models.Model):
     name = models.CharField(max_length=40)
     antiphona_types = models.ManyToManyField(AntiphonaType, through="MissaType_AntiphonaType")
 
-    @staticmethod
+    @classmethod
     def get_default_missa_type(cls):
-        return cls.objects.get_or_create(name="Missae")
+        """Returns the default missa type in case anyone deleted a reference."""
+        return cls.objects.get_or_create(name="Dominica")
 
 
 class MissaType_AntiphonaType(models.Model):

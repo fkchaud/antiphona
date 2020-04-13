@@ -1,0 +1,11 @@
+language: python
+python: "3.8.2"
+cache: pip
+env:
+  - DJANGO_VERSION=3.0.5
+install:
+  - pip install -r requirements.txt
+script:
+  - python manage.py test antiphona_app
+# after_success:
+#   - coveralls

@@ -10,6 +10,9 @@ class Anno(models.Model):
     """
     name = models.CharField(max_length=2)
 
+    def __str__(self):
+        return f"Anno {self.name}"
+
 
 class AntiphonaType(models.Model):
     """
@@ -17,6 +20,9 @@ class AntiphonaType(models.Model):
     Also some special antiphonas for special masses.
     """
     name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return f"Antiphona ad {self.name}"
 
 
 class MissaType(models.Model):
@@ -35,12 +41,18 @@ class MissaType(models.Model):
         """Returns the default missa type in case anyone deleted a reference."""
         return cls.objects.get_or_create(name="Dominica")
 
+    def __str__(self):
+        return self.name
+
 
 class MissaType_AntiphonaType(models.Model):
     """Connects the MissaType with the AntiphonaType adding an order to show"""
     missa_type = models.ForeignKey(MissaType, models.CASCADE)
     antiphona_type = models.ForeignKey(AntiphonaType, models.CASCADE)
     order = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return f"{self.missa_type} - ({self.order}) {self.antiphona_type}"
 
 
 class Missa(models.Model):
@@ -53,6 +65,9 @@ class Missa(models.Model):
     )
     antiphonae = models.ManyToManyField('Antiphona', through='Antiphona_Missa')
 
+    def __str__(self):
+        return self.name
+
 
 class Antiphona(models.Model):
     """
@@ -63,6 +78,9 @@ class Antiphona(models.Model):
     text = models.CharField(max_length=300)
     missae = models.ManyToManyField(Missa, through='Antiphona_Missa')
 
+    def __str__(self):
+        return self.name
+
 
 class Documentum(models.Model):
     """
@@ -70,6 +88,9 @@ class Documentum(models.Model):
     Missale Romanum, Graduale Romanum or Graduale Simplex.
     """
     name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
 
 
 class Antiphona_Missa(models.Model):
@@ -93,6 +114,9 @@ class Antiphona_Missa(models.Model):
     psalm = models.CharField(max_length=80, blank=True)
     alt_psalm = models.CharField(max_length=80, blank=True)
 
+    def __str__(self):
+        return f"{self.missa} - {self.antiphona}"
+
 
 class Suggestion(models.Model):
     """A single suggestion for an antiphona + psalm."""
@@ -102,3 +126,6 @@ class Suggestion(models.Model):
     sheet_link = models.URLField(max_length=120, blank=True)
     similarity = models.DecimalField(max_digits=4, decimal_places=2, blank=True)
     antiphona_missa = models.ForeignKey(Antiphona_Missa, models.CASCADE)
+
+    def __str__(self):
+        return f"Suggestion: {self.song_name} - {self.author}, for {self.antiphona_missa}"

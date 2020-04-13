@@ -37,7 +37,7 @@ class MissaType_AntiphonaType(models.Model):
     """Connects the MissaType with the AntiphonaType adding an order to show"""
     missa_type = models.ForeignKey(MissaType, models.CASCADE)
     antiphona_type = models.ForeignKey(AntiphonaType, models.CASCADE)
-    order = models.IntegerField(max_length=2)
+    order = models.PositiveSmallIntegerField()
 
 
 class Missa(models.Model):

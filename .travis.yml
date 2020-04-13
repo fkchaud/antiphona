@@ -6,6 +6,6 @@ env:
 install:
   - pip install -r requirements.txt
 script:
-  - python manage.py test antiphona_app
-# after_success:
-#   - coveralls
+  - coverage run --source antiphona_app pytest tests/
+after_success:
+  - coveralls
